@@ -58,6 +58,14 @@ namespace AnimalShelterApi.Controllers
 		{
 			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
 		}
+
+		// POST animals
+		[HttpPost]
+		public void Post([FromBody] Animal animal)
+		{
+			_db.Animals.Add(animal);
+			_db.SaveChanges();
+		}
 	}
 
 	[ApiVersion("2.0")]
@@ -111,6 +119,14 @@ namespace AnimalShelterApi.Controllers
 		public ActionResult<Animal> Get(int id)
 		{
 			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+		}
+
+		// POST animals
+		[HttpPost]
+		public void Post([FromBody] Animal animal)
+		{
+			_db.Animals.Add(animal);
+			_db.SaveChanges();
 		}
 	}
 }
