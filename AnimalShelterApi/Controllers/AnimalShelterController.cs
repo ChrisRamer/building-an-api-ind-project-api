@@ -75,6 +75,15 @@ namespace AnimalShelterApi.Controllers
 			_db.Entry(animal).State = EntityState.Modified;
 			_db.SaveChanges();
 		}
+
+		// DELETE animals/{id}
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+			Animal animal = _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			_db.Animals.Remove(animal);
+			_db.SaveChanges();
+		}
 	}
 
 	[ApiVersion("2.0")]
