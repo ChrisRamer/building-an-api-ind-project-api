@@ -146,5 +146,23 @@ namespace AnimalShelterApi.Controllers
 			_db.Animals.Add(animal);
 			_db.SaveChanges();
 		}
+
+		// PUT animals/{id}
+		[HttpPut("{id}")]
+		public void Put(int id, [FromBody] Animal animal)
+		{
+			animal.AnimalId = id;
+			_db.Entry(animal).State = EntityState.Modified;
+			_db.SaveChanges();
+		}
+
+		// DELETE animals/{id}
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+			Animal animal = _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			_db.Animals.Remove(animal);
+			_db.SaveChanges();
+		}
 	}
 }
