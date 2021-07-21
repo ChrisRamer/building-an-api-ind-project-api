@@ -181,18 +181,4 @@ namespace AnimalShelterApi.Controllers
 			Methods.Delete(id);
 		}
 	}
-
-	// Version 6: Easter egg!
-	[ApiVersion("6.0")]
-	[Route("v{version:apiVersion}/animals")]
-	[ApiController]
-	public class AnimalShelterV6Controller : ControllerBase
-	{
-		private AnimalShelterApiContext _db;
-
-		public AnimalShelterV6Controller(AnimalShelterApiContext db)
-		{
-			_db = db;
-		}
-	}
 }
