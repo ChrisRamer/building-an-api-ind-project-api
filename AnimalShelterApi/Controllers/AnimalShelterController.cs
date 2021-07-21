@@ -1,8 +1,6 @@
 using AnimalShelterApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AnimalShelterApi.Controllers
 {
@@ -13,44 +11,19 @@ namespace AnimalShelterApi.Controllers
 	public class AnimalShelterV1Controller : ControllerBase
 	{
 		private AnimalShelterApiContext _db;
+		private ApiMethods Methods;
 
 		public AnimalShelterV1Controller(AnimalShelterApiContext db)
 		{
 			_db = db;
+			Methods = new ApiMethods(db);
 		}
 
 		// GET /animals
 		[HttpGet]
-		public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
+	 	public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
 		{
-			var query = _db.Animals.AsQueryable();
-
-			if (id > 0)
-			{
-				query = query.Where(entry => entry.AnimalId == id);
-			}
-
-			if (name != null)
-			{
-				query = query.Where(entry => entry.Name == name);
-			}
-
-			if (species != null)
-			{
-				query = query.Where(entry => entry.Species == species);
-			}
-
-			if (gender != null)
-			{
-				query = query.Where(entry => entry.Gender == gender);
-			}
-
-			if (age > 0)
-			{
-				query = query.Where(entry => entry.Age == age);
-			}
-
-			return query.ToList();
+			return Methods.Get(id, name, species, gender, age);
 		}
 	}
 
@@ -60,54 +33,28 @@ namespace AnimalShelterApi.Controllers
 	[ApiController]
 	public class AnimalShelterV2Controller : ControllerBase
 	{
-		private AnimalShelterApiContext _db;
+		private ApiMethods Methods;
 
 		public AnimalShelterV2Controller(AnimalShelterApiContext db)
 		{
-			_db = db;
+			Methods = new ApiMethods(db);
 		}
 
 		// GET /animals
 		[HttpGet]
 		public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
 		{
-			var query = _db.Animals.AsQueryable();
-
-			if (id > 0)
-			{
-				query = query.Where(entry => entry.AnimalId == id);
-			}
-
-			if (name != null)
-			{
-				query = query.Where(entry => entry.Name == name);
-			}
-
-			if (species != null)
-			{
-				query = query.Where(entry => entry.Species == species);
-			}
-
-			if (gender != null)
-			{
-				query = query.Where(entry => entry.Gender == gender);
-			}
-
-			if (age > 0)
-			{
-				query = query.Where(entry => entry.Age == age);
-			}
-
-			return query.ToList();
+			return Methods.Get(id, name, species, gender, age);
 		}
 
 		// GET animals/{id}
 		[HttpGet("{id}")]
 		public ActionResult<Animal> Get(int id)
 		{
-			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			return Methods.Get(id);
 		}
 	}
+
 
 	// Version 3: GetAll, Get, Post
 	[ApiVersion("3.0")]
@@ -115,60 +62,32 @@ namespace AnimalShelterApi.Controllers
 	[ApiController]
 	public class AnimalShelterV3Controller : ControllerBase
 	{
-		private AnimalShelterApiContext _db;
+		private ApiMethods Methods;
 
 		public AnimalShelterV3Controller(AnimalShelterApiContext db)
 		{
-			_db = db;
+			Methods = new ApiMethods(db);
 		}
 
 		// GET /animals
 		[HttpGet]
 		public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
 		{
-			var query = _db.Animals.AsQueryable();
-
-			if (id > 0)
-			{
-				query = query.Where(entry => entry.AnimalId == id);
-			}
-
-			if (name != null)
-			{
-				query = query.Where(entry => entry.Name == name);
-			}
-
-			if (species != null)
-			{
-				query = query.Where(entry => entry.Species == species);
-			}
-
-			if (gender != null)
-			{
-				query = query.Where(entry => entry.Gender == gender);
-			}
-
-			if (age > 0)
-			{
-				query = query.Where(entry => entry.Age == age);
-			}
-
-			return query.ToList();
+			return Methods.Get(id, name, species, gender, age);
 		}
 
 		// GET animals/{id}
 		[HttpGet("{id}")]
 		public ActionResult<Animal> Get(int id)
 		{
-			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			return Methods.Get(id);
 		}
 
 		// POST animals
 		[HttpPost]
 		public void Post([FromBody] Animal animal)
 		{
-			_db.Animals.Add(animal);
-			_db.SaveChanges();
+			Methods.Post(animal);
 		}
 	}
 
@@ -178,69 +97,39 @@ namespace AnimalShelterApi.Controllers
 	[ApiController]
 	public class AnimalShelterV4Controller : ControllerBase
 	{
-		private AnimalShelterApiContext _db;
+		private ApiMethods Methods;
 
 		public AnimalShelterV4Controller(AnimalShelterApiContext db)
 		{
-			_db = db;
+			Methods = new ApiMethods(db);
 		}
 
 		// GET /animals
 		[HttpGet]
 		public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
 		{
-			var query = _db.Animals.AsQueryable();
-
-			if (id > 0)
-			{
-				query = query.Where(entry => entry.AnimalId == id);
-			}
-
-			if (name != null)
-			{
-				query = query.Where(entry => entry.Name == name);
-			}
-
-			if (species != null)
-			{
-				query = query.Where(entry => entry.Species == species);
-			}
-
-			if (gender != null)
-			{
-				query = query.Where(entry => entry.Gender == gender);
-			}
-
-			if (age > 0)
-			{
-				query = query.Where(entry => entry.Age == age);
-			}
-
-			return query.ToList();
+			return Methods.Get(id, name, species, gender, age);
 		}
 
 		// GET animals/{id}
 		[HttpGet("{id}")]
 		public ActionResult<Animal> Get(int id)
 		{
-			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			return Methods.Get(id);
 		}
 
 		// POST animals
 		[HttpPost]
 		public void Post([FromBody] Animal animal)
 		{
-			_db.Animals.Add(animal);
-			_db.SaveChanges();
+			Methods.Post(animal);
 		}
 
 		// PUT animals/{id}
 		[HttpPut("{id}")]
 		public void Put(int id, [FromBody] Animal animal)
 		{
-			animal.AnimalId = id;
-			_db.Entry(animal).State = EntityState.Modified;
-			_db.SaveChanges();
+			Methods.Put(id, animal);
 		}
 	}
 
@@ -250,78 +139,46 @@ namespace AnimalShelterApi.Controllers
 	[ApiController]
 	public class AnimalShelterV5Controller : ControllerBase
 	{
-		private AnimalShelterApiContext _db;
+		private ApiMethods Methods;
 
 		public AnimalShelterV5Controller(AnimalShelterApiContext db)
 		{
-			_db = db;
+			Methods = new ApiMethods(db);
 		}
 
 		// GET /animals
 		[HttpGet]
 		public ActionResult<IEnumerable<Animal>> Get(int id, string name, string species, string gender, int age)
 		{
-			var query = _db.Animals.AsQueryable();
-
-			if (id > 0)
-			{
-				query = query.Where(entry => entry.AnimalId == id);
-			}
-
-			if (name != null)
-			{
-				query = query.Where(entry => entry.Name == name);
-			}
-
-			if (species != null)
-			{
-				query = query.Where(entry => entry.Species == species);
-			}
-
-			if (gender != null)
-			{
-				query = query.Where(entry => entry.Gender == gender);
-			}
-
-			if (age > 0)
-			{
-				query = query.Where(entry => entry.Age == age);
-			}
-
-			return query.ToList();
+			return Methods.Get(id, name, species, gender, age);
 		}
 
 		// GET animals/{id}
 		[HttpGet("{id}")]
 		public ActionResult<Animal> Get(int id)
 		{
-			return _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
+			return Methods.Get(id);
 		}
 
 		// POST animals
 		[HttpPost]
 		public void Post([FromBody] Animal animal)
 		{
-			_db.Animals.Add(animal);
-			_db.SaveChanges();
+			Methods.Post(animal);
 		}
 
 		// PUT animals/{id}
 		[HttpPut("{id}")]
 		public void Put(int id, [FromBody] Animal animal)
 		{
-			animal.AnimalId = id;
-			_db.Entry(animal).State = EntityState.Modified;
-			_db.SaveChanges();
+			Methods.Put(id, animal);
 		}
 
 		// DELETE animals/{id}
 		[HttpDelete("{id}")]
 		public void Delete(int id)
 		{
-			Animal animal = _db.Animals.FirstOrDefault(entry => entry.AnimalId == id);
-			_db.Animals.Remove(animal);
-			_db.SaveChanges();
+			Methods.Delete(id);
 		}
 	}
 
