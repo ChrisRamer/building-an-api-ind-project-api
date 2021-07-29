@@ -14,6 +14,10 @@ Clone this repo and follow the instructions for [using the client to interact wi
 
 Using that client, you can go to each of the endpoints listed below.
 
+To run the API, open the terminal and navigate to the `AnimalShelterApi` directory.
+
+Then run the command `dotnet run`.
+
 ## Endpoints
 
 Each endpoint begins with the required `v{apiVersion}` with the version being an `int` or a `float`.
