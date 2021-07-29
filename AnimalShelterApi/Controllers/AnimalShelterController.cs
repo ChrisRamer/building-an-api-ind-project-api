@@ -10,12 +10,10 @@ namespace AnimalShelterApi.Controllers
 	[ApiController]
 	public class AnimalShelterV1Controller : ControllerBase
 	{
-		private AnimalShelterApiContext _db;
 		private ApiMethods Methods;
 
 		public AnimalShelterV1Controller(AnimalShelterApiContext db)
 		{
-			_db = db;
 			Methods = new ApiMethods(db);
 		}
 
